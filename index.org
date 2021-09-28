@@ -1,0 +1,12 @@
+* Stefan H Sold's Blog
+This can potentially be a interesting blog in the future ...
+I could post:
++ my vita here
++ helpful documentations
++ documents about:
+  - music sheets
+  - code snippets
+  - ...
++ stuff about emacs
++ stuff about fluxbox
+
