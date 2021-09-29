@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-09-28 Tue 10:42 -->
+<!-- 2021-09-29 Wed 10:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -246,12 +246,18 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3757c52">1. Stefan H Sold's Blog</a></li>
+<li><a href="#org0094e3c">1. Stefan H Sold's Blog</a></li>
+<li><a href="#org42d7f2d">2. Fluxbox</a>
+<ul>
+<li><a href="#org6ced450">2.1. Compile it yourself</a></li>
+<li><a href="#org62f8bea">2.2. Integrate it yourself such that the Desktop Manager can find it</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3757c52" class="outline-2">
-<h2 id="org3757c52"><span class="section-number-2">1</span> Stefan H Sold's Blog</h2>
+<div id="outline-container-org0094e3c" class="outline-2">
+<h2 id="org0094e3c"><span class="section-number-2">1</span> Stefan H Sold's Blog</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This can potentially be a interesting blog in the future &#x2026;
@@ -271,10 +277,129 @@ I could post:
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org42d7f2d" class="outline-2">
+<h2 id="org42d7f2d"><span class="section-number-2">2</span> Fluxbox</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Yes, it's old but I love it! Write about the features you like &#x2026;
+</p>
+</div>
+<div id="outline-container-org6ced450" class="outline-3">
+<h3 id="org6ced450"><span class="section-number-3">2.1</span> Compile it yourself</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+I found that the debian package of fluxbox (which version?) does not support (or
+it simply doesn't work do to a bug?) the great autotiling function 'arrangewindows'.
+Here, fluxbox guesses the 'best' arrangement compared to other other options
+like arrangewindowshorizontal or arrangewindowsstackright where the user already
+imposes a structure. So I decided
+to compile the newest version (1.3.7) myself. Of course I want to build a
+package first to make a clean install and (if necessary) deinstall possible. So
+I use the debian trinity of binary package building
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">./configure
+dh_make
+fakeroot debian/rules binary
+</pre>
+</div>
+<p>
+with the default settings. Afterwards I installed it with
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">dpkg --install 'the_package'
+</pre>
+</div>
+<p>
+(root privileges). What I did not know was that the default config settings do
+not include xinerama, imlib2 (for png image support), and freetype fonts.
+Eventually, I ended up with a fullscreen stretched over two monitors, all icons
+disappeared in my menu, and this default fluxbox font with an appearance that
+only a mother can like. If you type './configure &#x2013;help' it reads
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">[...]
+  --disable-imlib2        disable imlib2 support
+  --disable-xft           disable xft support
+  --disable-freetype2     disable freetype2 support
+  --disable-xrender       disable xrender support
+  --disable-xpm           disable xpm support
+  --disable-xinerama      disable xinerama support
+[...]
+</pre>
+</div>
+<p>
+so I thought I is activated by default and you only can deactivate it. However,
+the config didn't take it into account, obviously. What I hadn't read just a few
+lines above is the following
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">--disable-option-checking  ignore unrecognized --enable/--with options
+--disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+--enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+</pre>
+</div>
+<p>
+I gave it a try with '&#x2013;enable-imlib2' etc. and look here the config was
+complaining
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">checking for  imlib2 &gt;= 1.0.0 ... no
+configure: error: *** imlib2 support requested but libraries not found
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org62f8bea" class="outline-3">
+<h3 id="org62f8bea"><span class="section-number-3">2.2</span> Integrate it yourself such that the Desktop Manager can find it</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+My DIY deb package didn't take care of the Desktop Manager (DM) integration of fluxbox. So I had
+to do this manually which isn't that hard once you know the location where the
+DM is looking for. The folder of subject is /usr/share/xsessions, here you
+should find some *.desktop files and I put the fluxbox.desktop here with the
+following content
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">[Desktop Entry]
+Name=fluxbox
+Comment=This session logs you into fluxbox
+Exec=/usr/bin/startfluxbox
+TryExec=/usr/bin/fluxbox
+Type=Application
+DesktopNames=fluxbox
+X-GDM-SessionRegisters=true
+
+[X-Window Manager]
+SessionManaged=true
+</pre>
+</div>
+<p>
+'TryExec' is questionable as well as 'X-GDM-SessionRegisters=true'. The latter
+one is just copy-pasted from a gnome.desktop file I used as a template. For the
+former one: I put 'fluxbox' instead of 'startfluxbox' since I thought it's a
+fallback and so I put something different to the usual 'Exec'. This might be
+completely wrong. 
+</p>
+
+<p>
+I should mention that although I had the Gnome ecosystem installed I switched to
+lightdm (update-alternatives).
+</p>
+
+<p>
+Anyhow, the your DM should now be able to find fluxbox and lists it in the
+session drop-down menu.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Stefan Sold</p>
-<p class="date">Created: 2021-09-28 Tue 10:42</p>
+<p class="date">Created: 2021-09-29 Wed 10:01</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
