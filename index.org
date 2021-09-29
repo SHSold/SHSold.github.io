@@ -19,9 +19,10 @@ imposes a structure. So I decided
 to compile the newest version (1.3.7) myself. Of course I want to build a
 package first to make a clean install and (if necessary) deinstall possible. So
 I use the debian trinity of binary package building
+#+NAME: fluxbox_build
 #+BEGIN_SRC bash
 ./configure
-dh_make
+dh_make --createorig
 fakeroot debian/rules binary
 #+END_SRC
 with the default settings. Afterwards I installed it with
@@ -58,6 +59,47 @@ checking for  imlib2 >= 1.0.0 ... no
 configure: error: *** imlib2 support requested but libraries not found
 #+END_SRC
 
+If you try --enable-text the option is unrecognized, however!
+
+I configured it with
+#+BEGIN_SRC bash
+./configure --enable-slit --enable-xmb --enable-imlib2 \
+--enable-xrender --enable-freetype2 --enable-xpm \
+--enable-xrandr --enable-xft --enable-text
+#+END_SRC
+
+I had trouble with xft. Although, config didn't show any errors, the packege
+build process 
+
+Questions:
+What is:
++ xmb
++ xpm
++ xft
++ text
+
+For a successful config I had to install the following packages:
++ libimlib2-dev
++ libxfg-dev
++ libxpm-dev
++ libxrandr-dev
+
+Doing the [[file+emacs:index.org::fluxbox_build][Fluxbox Build]] now gives me an error that it cannot follow references.
+At that point I gave up the debian way and tried the ubuntu way with checkinstall.
+So I did the ubuntu package build
+#+NAME: ubuntu_fluxbox_build
+#+BEGIN_SRC bash
+./configure --enable-slit --enable-xmb --enable-imlib2 \
+--enable-xrender --enable-freetype2 --enable-xpm \
+--enable-xrandr --enable-xft --enable-text
+make
+checkinstall
+#+END_SRC
+checkinstall without sudo such that I can install it with dpkg after I
+deinstalled the old fluxbox version.  This worked super fast, without any
+errors, and gave me the result is exactly what I wanted.  I don't know what went
+wrong with the debian method. I guess I did something horrobly wrong.
+
 ** Integrate it yourself such that the Desktop Manager can find it
 My DIY deb package didn't take care of the Desktop Manager (DM) integration of fluxbox. So I had
 to do this manually which isn't that hard once you know the location where the
@@ -90,3 +132,6 @@ Anyhow, the your DM should now be able to find fluxbox and lists it in the
 session drop-down menu.
 
 * Emacs
+
+* My secret interest for Warhammer
+I first met Warhammer when I was a freshman at the university

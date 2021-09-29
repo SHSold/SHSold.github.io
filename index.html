@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-09-29 Wed 10:34 -->
+<!-- 2021-09-29 Wed 14:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -246,36 +246,37 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd96b699">1. Stefan H Sold's Blog</a>
+<li><a href="#orgfdad9c8">1. Stefan H Sold's Blog</a>
 <ul>
-<li><a href="#org36b789c">1.1. About Me</a>
+<li><a href="#org713cc4c">1.1. About Me</a>
 <ul>
-<li><a href="#orgbafcae9">1.1.1. Vita</a></li>
+<li><a href="#orga393fbd">1.1.1. Vita</a></li>
 </ul>
 </li>
-<li><a href="#org83e43e3">1.2. Music Stuff</a></li>
+<li><a href="#org60d6313">1.2. Music Stuff</a></li>
 </ul>
 </li>
-<li><a href="#org600c029">2. Fluxbox</a>
+<li><a href="#orgb1c5832">2. Fluxbox</a>
 <ul>
-<li><a href="#org0b5d04b">2.1. Compile it yourself</a></li>
-<li><a href="#orge6e14f6">2.2. Integrate it yourself such that the Desktop Manager can find it</a></li>
+<li><a href="#org66581a5">2.1. Compile it yourself</a></li>
+<li><a href="#org4539166">2.2. Integrate it yourself such that the Desktop Manager can find it</a></li>
 </ul>
 </li>
-<li><a href="#org7e8b05c">3. Emacs</a></li>
+<li><a href="#orgc0235f0">3. Emacs</a></li>
+<li><a href="#org2b11d04">4. My secret interest for Warhammer</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd96b699" class="outline-2">
-<h2 id="orgd96b699"><span class="section-number-2">1</span> Stefan H Sold's Blog</h2>
+<div id="outline-container-orgfdad9c8" class="outline-2">
+<h2 id="orgfdad9c8"><span class="section-number-2">1</span> Stefan H Sold's Blog</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org36b789c" class="outline-3">
-<h3 id="org36b789c"><span class="section-number-3">1.1</span> About Me</h3>
+<div id="outline-container-org713cc4c" class="outline-3">
+<h3 id="org713cc4c"><span class="section-number-3">1.1</span> About Me</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orgbafcae9" class="outline-4">
-<h4 id="orgbafcae9"><span class="section-number-4">1.1.1</span> Vita</h4>
+<div id="outline-container-orga393fbd" class="outline-4">
+<h4 id="orga393fbd"><span class="section-number-4">1.1.1</span> Vita</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -312,20 +313,20 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org83e43e3" class="outline-3">
-<h3 id="org83e43e3"><span class="section-number-3">1.2</span> Music Stuff</h3>
+<div id="outline-container-org60d6313" class="outline-3">
+<h3 id="org60d6313"><span class="section-number-3">1.2</span> Music Stuff</h3>
 </div>
 </div>
 
-<div id="outline-container-org600c029" class="outline-2">
-<h2 id="org600c029"><span class="section-number-2">2</span> Fluxbox</h2>
+<div id="outline-container-orgb1c5832" class="outline-2">
+<h2 id="orgb1c5832"><span class="section-number-2">2</span> Fluxbox</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Yes, it's old but I love it! Write about the features you like &#x2026;
 </p>
 </div>
-<div id="outline-container-org0b5d04b" class="outline-3">
-<h3 id="org0b5d04b"><span class="section-number-3">2.1</span> Compile it yourself</h3>
+<div id="outline-container-org66581a5" class="outline-3">
+<h3 id="org66581a5"><span class="section-number-3">2.1</span> Compile it yourself</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 I found that the debian package of fluxbox (which version?) does not support (or
@@ -338,8 +339,8 @@ package first to make a clean install and (if necessary) deinstall possible. So
 I use the debian trinity of binary package building
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">./configure
-dh_make
+<pre class="src src-bash" id="org3d9b53d">./configure
+dh_make --createorig
 fakeroot debian/rules binary
 </pre>
 </div>
@@ -388,11 +389,71 @@ complaining
 configure: error: *** imlib2 support requested but libraries not found
 </pre>
 </div>
+
+<p>
+If you try &#x2013;enable-text the option is unrecognized, however!
+</p>
+
+<p>
+I configured it with
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">./configure --enable-slit --enable-xmb --enable-imlib2 \
+--enable-xrender --enable-freetype2 --enable-xpm \
+--enable-xrandr --enable-xft --enable-text
+</pre>
+</div>
+
+<p>
+I had trouble with xft. Although, config didn't show any errors, the packege
+build process 
+</p>
+
+<p>
+Questions:
+What is:
+</p>
+<ul class="org-ul">
+<li>xmb</li>
+<li>xpm</li>
+<li>xft</li>
+<li>text</li>
+</ul>
+
+<p>
+For a successful config I had to install the following packages:
+</p>
+<ul class="org-ul">
+<li>libimlib2-dev</li>
+<li>libxfg-dev</li>
+<li>libxpm-dev</li>
+<li>libxrandr-dev</li>
+</ul>
+
+<p>
+Doing the <a href="index.html#MissingReference">Fluxbox Build</a> now gives me an error that it cannot follow references.
+At that point I gave up the debian way and tried the ubuntu way with checkinstall.
+So I did the ubuntu package build
+</p>
+<div class="org-src-container">
+<pre class="src src-bash" id="org076b5ae">./configure --enable-slit --enable-xmb --enable-imlib2 \
+--enable-xrender --enable-freetype2 --enable-xpm \
+--enable-xrandr --enable-xft --enable-text
+make
+checkinstall
+</pre>
+</div>
+<p>
+checkinstall without sudo such that I can install it with dpkg after I
+deinstalled the old fluxbox version.  This worked super fast, without any
+errors, and gave me the result is exactly what I wanted.  I don't know what went
+wrong with the debian method. I guess I did something horrobly wrong.
+</p>
 </div>
 </div>
 
-<div id="outline-container-orge6e14f6" class="outline-3">
-<h3 id="orge6e14f6"><span class="section-number-3">2.2</span> Integrate it yourself such that the Desktop Manager can find it</h3>
+<div id="outline-container-org4539166" class="outline-3">
+<h3 id="org4539166"><span class="section-number-3">2.2</span> Integrate it yourself such that the Desktop Manager can find it</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 My DIY deb package didn't take care of the Desktop Manager (DM) integration of fluxbox. So I had
@@ -436,13 +497,22 @@ session drop-down menu.
 </div>
 </div>
 
-<div id="outline-container-org7e8b05c" class="outline-2">
-<h2 id="org7e8b05c"><span class="section-number-2">3</span> Emacs</h2>
+<div id="outline-container-orgc0235f0" class="outline-2">
+<h2 id="orgc0235f0"><span class="section-number-2">3</span> Emacs</h2>
+</div>
+
+<div id="outline-container-org2b11d04" class="outline-2">
+<h2 id="org2b11d04"><span class="section-number-2">4</span> My secret interest for Warhammer</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+I first met Warhammer when I was a freshman at the university
+</p>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Stefan Sold</p>
-<p class="date">Created: 2021-09-29 Wed 10:34</p>
+<p class="date">Created: 2021-09-29 Wed 14:05</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
